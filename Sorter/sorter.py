@@ -1,5 +1,5 @@
 '''Handles sorting logic for TidyCobra'''
-from Sorter import configurator as config_module
+from Sorter.configurator import Configurator
 import glob, os, shutil
 from datetime import datetime
 class Sorter:
@@ -24,8 +24,8 @@ class Sorter:
 
 
     def __init__(self):
-        configurator = config_module.Configurator()
-        self.config = configurator.load_config("../Sorter/config.json")
+        cfg = Configurator()
+        self.config = cfg.load_config()
         self.path_downloads = self.config["path_downloads"]
         old_path = os.getcwd()
         os.chdir(self.path_downloads)

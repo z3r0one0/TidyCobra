@@ -1,7 +1,7 @@
 import wx
 import wx.dataview
 from GUI import view_addrule
-from wx.lib.pubsub import pub
+from pubsub import pub
 from Sorter import configurator as config_tool
 from Sorter import sorter as sorter_tool
 import os.path
@@ -80,8 +80,11 @@ class MainWindow(wx.Frame):
 
 
         ''' Logo '''
-        self.img_logo = wx.Image("../Resources/logo.png", wx.BITMAP_TYPE_ANY)
-        self.sb1 = wx.StaticBitmap(self.panel, -1, wx.BitmapFromImage(self.img_logo))
+        script_dir = os.path.dirname(__file__)
+        logo_path = os.path.join(script_dir, os.pardir, 'Resources', 'logo.png')
+        logo_path = os.path.abspath(logo_path)
+        self.img_logo = wx.Image(logo_path, wx.BITMAP_TYPE_ANY)
+        self.sb1 = wx.StaticBitmap(self.panel, -1, wx.Bitmap(self.img_logo))
         ''' Text labels '''
 
         self.text_step1 = wx.StaticText(self.panel, label="Step 1: Choose your Downloads folder")
@@ -168,9 +171,8 @@ class MainWindow(wx.Frame):
         self.SetMaxSize(self.GetSize())
         self.Center()
 
-        self.default_config_path = '../Sorter/config.json'
-        if os.path.isfile(self.default_config_path):
-            config_display_data = self.config.load_config(self.default_config_path)
+        if os.path.isfile(self.config.config_path):
+            config_display_data = self.config.load_config()
             self.textbox_download_folder.SetValue(config_display_data["path_downloads"])
             for rule in config_display_data["rules"]:
                 print(rule)

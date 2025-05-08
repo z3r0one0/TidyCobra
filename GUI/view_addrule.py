@@ -1,5 +1,5 @@
 import wx
-from wx.lib.pubsub import pub
+from pubsub import pub
 class AddRuleWindow(wx.Frame):
 
     def OnBtnBrowse(self,event):
