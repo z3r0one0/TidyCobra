@@ -15,10 +15,10 @@ class Configurator():
 
         ### Save config ###
         if message == "save_config":
-            print("received=",arg2)
+            print("received=", arg2)
             with open(self.config_path, 'w+') as f:
-                json.dump(arg2,f)
-            print("done")
+                json.dump(arg2, f)
+            print(f"Configuration successfully saved to {self.config_path}")
         ### Load config ###
         elif message == "import_config":
             #TODO:implement
