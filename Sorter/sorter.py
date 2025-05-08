@@ -1,7 +1,8 @@
 '''Handles sorting logic for TidyCobra'''
-from Sorter.configurator import Configurator
+from . import configurator
 import glob, os, shutil
 from datetime import datetime
+
 class Sorter:
 
     def fix_duplicate(self,path):
@@ -9,6 +10,7 @@ class Sorter:
         new_name = path.split(".")
         new_name[0] += "_duplicate" + str(int(datetime.timestamp(datetime.now()))%1000000)
         return ".".join(new_name)
+
     def sort(self,path_destination,extensions):
         for extension in extensions:
             print(extension)
@@ -24,7 +26,7 @@ class Sorter:
 
 
     def __init__(self):
-        cfg = Configurator()
+        cfg = configurator.Configurator()
         self.config = cfg.load_config()
         self.path_downloads = self.config["path_downloads"]
         old_path = os.getcwd()

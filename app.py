@@ -1,6 +1,6 @@
 from os.path import expanduser
 from pathlib import Path
-from GUI import view_main
+from .GUI import view_main
 import glob
 
 def run():
