@@ -99,9 +99,6 @@ class MainWindow(wx.Frame):
         self.hbox_dataview_controls = wx.BoxSizer(wx.HORIZONTAL)
         self.hbox_save_controls = wx.BoxSizer(wx.HORIZONTAL)
 
-        ''' Dialogs '''
-        self.dialog_step1 = wx.DirDialog(None, "Choose input directory", "", wx.DD_DIR_MUST_EXIST)
-
         ''' Buttons '''
         self.btn_download_folder = wx.Button(self.panel, label="Browse")
         self.btn_download_folder.Bind(wx.EVT_BUTTON, self.OnBtnDownloadFolder)
@@ -171,7 +168,11 @@ class MainWindow(wx.Frame):
         self.SetMaxSize(self.GetSize())
         self.Center()
 
-        if os.path.isfile(self.config.config_path):
+        config_dir = os.path.join(os.path.dirname(__file__), os.pardir, 'Sorter')
+        self.default_config_path = os.path.join(config_dir, 'config.json')
+        self.default_config_path = os.path.abspath(self.default_config_path)
+
+        if os.path.isfile(self.default_config_path):
             config_display_data = self.config.load_config()
             self.textbox_download_folder.SetValue(config_display_data["path_downloads"])
             for rule in config_display_data["rules"]:
@@ -189,4 +190,5 @@ def render_GUI():
     app.MainLoop()
 
 
-render_GUI()
+if __name__ == '__main__':
+    render_GUI()

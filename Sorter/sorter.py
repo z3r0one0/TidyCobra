@@ -14,13 +14,13 @@ class Sorter:
             print(extension)
             for file in glob.glob("*"+extension):
                 print(file)
-                current_file_path = self.path_downloads+"/"+file
-                new_file_path = path_destination+"/"+file
+                current_file_path = os.path.join(self.path_downloads, file)
+                new_file_path = os.path.join(path_destination, file)
                 if os.path.isfile(new_file_path):
                     new_file_path = self.fix_duplicate(new_file_path)
 
                 shutil.move(current_file_path,new_file_path)
-    print("done!")
+        print(f"Done sorting {', '.join(extensions)} files to {path_destination}")
 
 
     def __init__(self):
