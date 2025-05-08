@@ -1,5 +1,5 @@
 '''Handles sorting logic for TidyCobra'''
-from . import configurator
+from Sorter import configurator
 import glob, os, shutil
 from datetime import datetime
 
