@@ -1,9 +1,9 @@
 import wx
 import wx.dataview
-from . import view_addrule
+from GUI import view_addrule
 from pubsub import pub
-from ..Sorter import configurator as config_tool
-from ..Sorter import sorter as sorter_tool
+from Sorter import configurator as config_tool
+from Sorter import sorter as sorter_tool
 import os.path
 
 class MainWindow(wx.Frame):
