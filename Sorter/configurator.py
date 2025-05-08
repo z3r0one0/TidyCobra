@@ -21,8 +21,54 @@ class Configurator():
             print(f"Configuration successfully saved to {self.config_path}")
         ### Load config ###
         elif message == "import_config":
-            #TODO:implement
-            return -1
+            if arg2 and os.path.isfile(arg2):
+                try:
+                    config = self.validate_config_file(arg2)
+                    if config:
+                        pub.sendMessage("configImportResult", message="success", config=config)
+                    else:
+                        pub.sendMessage("configImportResult", message="invalid_format")
+                except json.JSONDecodeError:
+                    pub.sendMessage("configImportResult", message="invalid_json")
+            else:
+                pub.sendMessage("configImportResult", message="file_not_found")
+
+    def validate_config_file(self, config_path):
+        """Validates a config file format and checks paths"""
+        with open(config_path) as f:
+            config = json.load(f)
+            
+        # Check required fields
+        if not isinstance(config, dict) or "path_downloads" not in config or "rules" not in config:
+            return None
+            
+        # Check rules format
+        if not isinstance(config["rules"], list):
+            return None
+            
+        for rule in config["rules"]:
+            if not isinstance(rule, list) or len(rule) != 2:
+                return None
+        
+        # All validation passed
+        return config
+
+    def validate_paths(self, config):
+        """Checks if paths in the config exist"""
+        results = {
+            "valid": True,
+            "downloads_exists": os.path.isdir(config["path_downloads"]),
+            "destination_paths": []
+        }
+        
+        for rule in config["rules"]:
+            dest_path = rule[0]
+            results["destination_paths"].append({
+                "path": dest_path,
+                "exists": os.path.isdir(dest_path)
+            })
+            
+        return results
 
     def load_config(self):
         if not os.path.isfile(self.config_path):
