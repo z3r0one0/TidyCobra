@@ -1,1 +1,3 @@
-# Make GUI a proper package 
+"""
+GUI components for TidyCobra
+""" 

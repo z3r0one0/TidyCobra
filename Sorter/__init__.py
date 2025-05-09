@@ -1,1 +1,3 @@
-# Make Sorter a proper package
+"""
+Sorting logic for TidyCobra
+"""
